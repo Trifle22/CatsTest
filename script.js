@@ -16,14 +16,27 @@ const renderCats = (response) => {
   response.forEach(item => {
     const catCard = `
     <div class="cat-img">
-      <img src="${item.url}" alt="cat">
-      <div class="heart"></div>
+      <img src="${item.url}" alt="cat" class="cat-img__img"> 
+      <i class="far fa-heart"></i>
     </div>`
     allCats.insertAdjacentHTML('beforeend', catCard);
   })
-
 }
 
+allCats.addEventListener('mouseover', event => {
+  const target = event.target;
+  if (target.matches('.fa-heart')) {
+    target.style.animation = 'fadeHeart 0.6s ease-in-out';
+    target.className = 'fas fa-heart';
+  }
+})
+allCats.addEventListener('mouseout', event => {
+  const target = event.target;
+  if (target.matches('.fa-heart')) {
+    target.style.animation = 'fadeHeart 0.6s ease-in-out';
+    target.className = 'far fa-heart';
+  }
+})
 
 
 
