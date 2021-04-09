@@ -2,7 +2,7 @@ const url = 'https:/api.thecatapi.com/v1/images/search?format=json&limit=15';
 const allCats = document.querySelector('.all-cats');
 const favoriteCats = document.querySelector('.favorite-cats');
 
-const favoriteCatsUrls = JSON.parse(localStorage.getItem('favoriteCats'));
+let favoriteCatsUrls = JSON.parse(localStorage.getItem('favoriteCats'));
 
 fetch(url, {
   method: 'GET',
@@ -26,12 +26,14 @@ const renderCats = (response) => {
 
 const renderFavoriteCats = cats => {
   cats.forEach(item => {
-    const catCard = `
-    <div class="cat-img">
-    <img src="${item}" alt="cat" class="cat-img__img"> 
-    <i class="fas fa-heart"></i>
-    </div>`;
-    favoriteCats.insertAdjacentHTML('beforeend', catCard);
+    if (item) {
+      const catCard = `
+      <div class="cat-img">
+      <img src="${item}" alt="cat" class="cat-img__img"> 
+      <i class="fas fa-heart"></i>
+      </div>`;
+      favoriteCats.insertAdjacentHTML('beforeend', catCard);
+    }
   })
 }
 renderFavoriteCats(favoriteCatsUrls);
@@ -79,7 +81,9 @@ document.addEventListener('click', event => {
     renderFavoriteCats(favoriteCatsUrls);
   } else if (target.closest('.favorite-cats') && target.matches('.fa-heart')) {
     target.className = 'far fa-heart';
-    
+    delete favoriteCatsUrls[favoriteCatsUrls.indexOf(target.previousElementSibling.src)];
+    localStorage.favoriteCats = JSON.stringify(favoriteCatsUrls);
+    favoriteCatsUrls = JSON.parse(localStorage.getItem('favoriteCats'));
     alert('Котик убран из любимых');
     renderFavoriteCats(favoriteCatsUrls);
   }
