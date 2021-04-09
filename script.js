@@ -1,7 +1,8 @@
 const url = 'https:/api.thecatapi.com/v1/images/search?format=json&limit=15';
 const allCats = document.querySelector('.all-cats');
+const favoriteCats = document.querySelector('.favorite-cats');
 
-
+const favoriteCatsUrls = JSON.parse(localStorage.getItem('favoriteCats'));
 
 fetch(url, {
   method: 'GET',
@@ -23,18 +24,64 @@ const renderCats = (response) => {
   })
 }
 
+const renderFavoriteCats = cats => {
+  cats.forEach(item => {
+    const catCard = `
+    <div class="cat-img">
+    <img src="${item}" alt="cat" class="cat-img__img"> 
+    <i class="fas fa-heart"></i>
+    </div>`;
+    favoriteCats.insertAdjacentHTML('beforeend', catCard);
+  })
+}
+renderFavoriteCats(favoriteCatsUrls);
+
 allCats.addEventListener('mouseover', event => {
   const target = event.target;
   if (target.matches('.fa-heart')) {
     target.style.animation = 'fadeHeart 0.6s ease-in-out';
     target.className = 'fas fa-heart';
   }
-})
+});
+
 allCats.addEventListener('mouseout', event => {
   const target = event.target;
   if (target.matches('.fa-heart')) {
     target.style.animation = 'fadeHeart 0.6s ease-in-out';
     target.className = 'far fa-heart';
+  }
+})
+
+favoriteCats.addEventListener('mouseover', event => {
+  const target = event.target;
+  if (target.matches('.fa-heart')) {
+    target.style.animation = 'fadeHeart 0.6s ease-in-out';
+    target.className = 'far fa-heart';
+  }
+});
+
+favoriteCats.addEventListener('mouseout', event => {
+  const target = event.target;
+  if (target.matches('.fa-heart')) {
+    target.style.animation = 'fadeHeart 0.6s ease-in-out';
+    target.className = 'fas fa-heart';
+  }
+})
+
+document.addEventListener('click', event => {
+  const target = event.target;
+  if (target.closest('.all-cats') && target.matches('.fa-heart')){
+    target.className = 'fas fa-heart';
+    favoriteCatsUrls.push(target.previousElementSibling.src);
+    localStorage.favoriteCats = JSON.stringify(favoriteCatsUrls);
+    target.parentNode.style.display = 'none';
+    alert('Котик добавлен в любимые');
+    renderFavoriteCats(favoriteCatsUrls);
+  } else if (target.closest('.favorite-cats') && target.matches('.fa-heart')) {
+    target.className = 'far fa-heart';
+    
+    alert('Котик убран из любимых');
+    renderFavoriteCats(favoriteCatsUrls);
   }
 })
 

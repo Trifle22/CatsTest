@@ -71,9 +71,8 @@ header button.active {
   object-fit: cover;
 }
 
-.favourite-cats {
+.favorite-cats {
   padding: 51px 62px;
-  display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
