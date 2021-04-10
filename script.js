@@ -2,7 +2,9 @@ const url = 'https:/api.thecatapi.com/v1/images/search?format=json&limit=15';
 const allCats = document.querySelector('.all-cats');
 const favoriteCats = document.querySelector('.favorite-cats');
 
-let favoriteCatsUrls = JSON.parse(localStorage.getItem('favoriteCats'));
+
+let favoriteCatsUrls = JSON.parse(localStorage.getItem('favoriteCats')) || [];
+
 
 fetch(url, {
   method: 'GET',
@@ -36,6 +38,7 @@ const renderFavoriteCats = cats => {
     }
   })
 }
+
 renderFavoriteCats(favoriteCatsUrls);
 
 allCats.addEventListener('mouseover', event => {
@@ -75,15 +78,17 @@ document.addEventListener('click', event => {
   if (target.closest('.all-cats') && target.matches('.fa-heart')){
     target.className = 'fas fa-heart';
     favoriteCatsUrls.push(target.previousElementSibling.src);
+    favoriteCats.textContent = '';
     localStorage.favoriteCats = JSON.stringify(favoriteCatsUrls);
     target.parentNode.style.display = 'none';
     alert('Котик добавлен в любимые');
     renderFavoriteCats(favoriteCatsUrls);
   } else if (target.closest('.favorite-cats') && target.matches('.fa-heart')) {
     target.className = 'far fa-heart';
-    delete favoriteCatsUrls[favoriteCatsUrls.indexOf(target.previousElementSibling.src)];
+    favoriteCatsUrls.splice(favoriteCatsUrls.indexOf(target.previousElementSibling.src), 1);
+    favoriteCats.textContent = '';
     localStorage.favoriteCats = JSON.stringify(favoriteCatsUrls);
-    favoriteCatsUrls = JSON.parse(localStorage.getItem('favoriteCats'));
+    target.parentNode.style.display = 'none';
     alert('Котик убран из любимых');
     renderFavoriteCats(favoriteCatsUrls);
   }
