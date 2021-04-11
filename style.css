@@ -89,12 +89,68 @@ header button.active {
   color: red;
   transition: all 0.5s ease-in-out;
 }
-.fa-heart:hover {
-  color: red;
-}
+
 
 @keyframes fadeHeart {
   0% { opacity:0}
   100% { opacity:1}
 }
 
+@media (max-width: 768px ) {
+  .header {
+    padding: 0 40px;
+  }
+  .all-cats, .favorite-cats {
+    padding: 25px 40px;
+  }
+  .header button {
+    padding: 15px 7px;
+  }
+  .cat-img {
+    height: 175px;
+  }
+  .fa-heart {
+    width: 36px;
+    height: 36px;
+    font-size: 36px;
+    right: 13px;
+    bottom: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .header{
+    padding: 0 20px;
+  }
+  .all-cats, .favorite-cats {
+    padding: 15px 20px;
+  }
+  .header button {
+    padding: 10px 7px;
+    font-size: 13px;
+  }
+  .cat-img {
+    height: 150px;
+    flex-basis: 45%;
+  }
+  .fa-heart {
+    width: 28px;
+    height: 28px;
+    font-size: 28px;
+    right: 10px;
+    bottom: 12px;
+  }
+}
+
+@media (max-width: 376px) {
+  .header {
+    padding: 0 15px;
+  }
+  .all-cats, .favorite-cats {
+    padding: 10px 15px;
+  }
+  .cat-img {
+    height: 170px;
+    flex-basis: 48%;
+  }
+}

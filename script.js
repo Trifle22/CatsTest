@@ -15,7 +15,6 @@ fetch(url, {
 }).then(response => response.json()).then(response => renderCats(response));
 
 const renderCats = (response) => {
-  console.log(response);
   response.forEach(item => {
     const catCard = `
     <div class="cat-img">
