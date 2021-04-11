@@ -12,7 +12,7 @@ fetch(url, {
     'Content-Type': 'application/json; charset=utf-8',
     'x-api-Key': '2c90cc4c-aa92-459c-93ea-9e81a664c71d'
   }
-}).then(response => response.json()).then(response => renderCats(response));
+}).then(response => response.json()).then(response => renderCats(response)).catch(error => console.error(error));
 
 const renderCats = (response) => {
   response.forEach(item => {
